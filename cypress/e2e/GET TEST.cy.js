@@ -1,8 +1,8 @@
 describe('Automate and verify GET request',()=>{
   it('Get user response',()=>{
     cy.request({
-      url:'https://reqres.in/api/users?page=1',
-      headers:{'x-api-key':'reqres_8ad760d30bc4412381969c460638f1f1'}
+      url:`${Cypress.env('reqresBaseUrl')}/api/users?page=1`,
+      headers:{'x-api-key': Cypress.env('reqresApiKey')}
     }).then((res)=>{
       expect(res.status).to.eq(200)
       expect(res.body.total).to.eq(12)

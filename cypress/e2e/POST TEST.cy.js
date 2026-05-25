@@ -1,21 +1,36 @@
-describe('Automate and verify POST request new user ',()=>{
-    it('Post new user',()=>{
-        cy.request({
-            method:'Post',
-            url:'https://reqres.in/api/users',
-            headers:{'x-api-key':'reqres_8ad760d30bc4412381969c460638f1f1'},
-            body:{"name":"enea",
-                  "job" : "QA",
-                  "age" : "30"
-            }
+describe('Automate and verify POST request new user',()=>{
 
-        }).then((res)=>{
-            expect(res.status).to.eq(201)
-            expect(res.body.name).to.eq('enea')
-            expect(res.body.id).to.exist
-            expect(res.body.createdAt).to.exist
-            expect(res.body.job).to.eq('QA')
-            expect(res.body.age).to.eq('30')
-        })
+  it('Post new user',()=>{
+
+    cy.fixture('UserData').then((UserData)=>{
+
+      cy.request({
+
+        method:'POST',
+
+        url:`${Cypress.env('reqresBaseUrl')}/api/users`,
+
+        headers:{
+          'x-api-key': Cypress.env('reqresApiKey')
+        },
+
+        body: UserData
+
+      }).then((res)=>{
+
+        expect(res.status).to.eq(201)
+
+        expect(res.body.name).to.eq(UserData.name)
+        expect(res.body.job).to.eq(UserData.job)
+        expect(res.body.age).to.eq(UserData.age)
+
+        expect(res.body.id).to.exist
+        expect(res.body.createdAt).to.exist
+
+      })
+
     })
+
+  })
+
 })

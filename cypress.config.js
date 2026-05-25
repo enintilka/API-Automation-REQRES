@@ -1,7 +1,15 @@
+require('dotenv').config()
 const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
-  allowCypressEnv: false,
+  
+
+  env: {
+
+    reqresBaseUrl: process.env.reqres_base_url,
+    reqresApiKey: process.env.reqres_api_key
+
+  },
 
   e2e: {
     setupNodeEvents(on, config) {
